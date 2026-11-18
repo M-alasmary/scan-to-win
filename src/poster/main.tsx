@@ -20,6 +20,14 @@ function seeded(n: number) {
 }
 const STARS = seeded(90)
 
+/** ?size=a5 prints the same artwork at 50% on an A5 sheet (A5 is exactly half of A3). */
+const SIZE: 'a3' | 'a5' = new URLSearchParams(window.location.search).get('size') === 'a5' ? 'a5' : 'a3'
+if (SIZE === 'a5') {
+  const st = document.createElement('style')
+  st.textContent = '@page { size: 148mm 210mm; margin: 0; } @media print { .poster { zoom: 0.5 !important; } }'
+  document.head.appendChild(st)
+}
+
 function Poster() {
   const [svg, setSvg] = useState('')
   const [fit, setFit] = useState(1)
@@ -56,13 +64,17 @@ function Poster() {
         <span>
           QR → <code dir="ltr">{TARGET}</code>
         </span>
-        <button type="button" onClick={() => window.print()}>
-          <Printer size={16} /> Print / Save PDF (A3)
-        </button>
+        <span className="sizes">
+          <a href="?size=a3" aria-current={SIZE === 'a3' ? 'page' : undefined}>A3</a>
+          <a href="?size=a5" aria-current={SIZE === 'a5' ? 'page' : undefined}>A5</a>
+          <button type="button" onClick={() => window.print()}>
+            <Printer size={16} /> Print / Save PDF ({SIZE.toUpperCase()})
+          </button>
+        </span>
       </div>
 
       <div className="stage">
-        <article className="poster" dir="rtl" lang="ar" style={{ ['--fit' as string]: fit }}>
+        <article className={`poster ${SIZE}`} dir="rtl" lang="ar" style={{ ['--fit' as string]: fit }}>
           <div className="bg-glow" />
           <div className="beams" />
           <div className="floor" />

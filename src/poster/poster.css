@@ -101,3 +101,9 @@ html, body { background: #05070c; color: #F5F7FA; font-family: "Cairo Variable",
   .stage { padding: 0; display: block; }
   .poster { box-shadow: none; zoom: 1; }
 }
+
+/* A5: artwork printed at 50%, so fine print is enlarged to stay readable (~6.5pt) */
+.toolbar .sizes { display: inline-flex; gap: 8px; align-items: center; }
+.toolbar .sizes a { color: #F5F7FA; text-decoration: none; padding: 8px 12px; border-radius: 10px; border: 1px solid #ffffff22; font-weight: 700; }
+.toolbar .sizes a[aria-current] { background: #00D9FF; color: #080B12; border-color: #00D9FF; }
+.poster.a5 .fine { top: 92mm; padding: 0 14mm; font-size: 4.6mm; line-height: 1.5; color: #f5f7fa99; }
