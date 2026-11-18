@@ -66,7 +66,10 @@ npm run qr -- https://your-deployed-site.example/
 
 Writes `poster/qr-code.svg` and `poster/qr-code.png` (2048 px). It refuses non‑HTTPS URLs.
 
-## Print the A3 poster
+## Print the poster (A3 or A5)
+
+A5 version: open `poster.html?size=a5` (or use the A3/A5 switch in the toolbar). It is the same artwork at 50% on an A5 sheet; the QR is ~76 mm wide. Ready-made files: `poster/THE-TRAP-A3.pdf`, `poster/THE-TRAP-A5.pdf`.
+
 
 1. Open `https://your-deployed-site.example/poster.html`.
 2. Check the toolbar shows the right URL after "QR →".
