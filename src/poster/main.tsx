@@ -20,21 +20,31 @@ function seeded(n: number) {
 }
 const STARS = seeded(90)
 
-/** ?size=a5 prints the same artwork at 50% on an A5 sheet (A5 is exactly half of A3). */
-const SIZE: 'a3' | 'a5' = new URLSearchParams(window.location.search).get('size') === 'a5' ? 'a5' : 'a3'
-if (SIZE === 'a5') {
+/**
+ * ?size=a5   same artwork at 50% on an A5 sheet (A5 is exactly half of A3)
+ * ?size=ipad landscape layout matching the iPad Air 11" screen (1180 × 820 pt, 2360 × 1640 px)
+ */
+type Size = 'a3' | 'a5' | 'ipad'
+const q = new URLSearchParams(window.location.search).get('size')
+const SIZE: Size = q === 'a5' || q === 'ipad' ? q : 'a3'
+const PAGE: Record<Size, string> = {
+  a3: '',
+  a5: '@page { size: 148mm 210mm; margin: 0; } @media print { .poster { zoom: 0.5 !important; } }',
+  ipad: '@page { size: 1180px 820px; margin: 0; }',
+}
+if (PAGE[SIZE]) {
   const st = document.createElement('style')
-  st.textContent = '@page { size: 148mm 210mm; margin: 0; } @media print { .poster { zoom: 0.5 !important; } }'
+  st.textContent = PAGE[SIZE]
   document.head.appendChild(st)
 }
+const WIDTH_PX = SIZE === 'ipad' ? 1180 : (297 / 25.4) * 96
 
 function Poster() {
   const [svg, setSvg] = useState('')
   const [fit, setFit] = useState(1)
 
   useEffect(() => {
-    const A3_PX = (297 / 25.4) * 96
-    const onResize = () => setFit(Math.min(1, (window.innerWidth - 32) / A3_PX))
+    const onResize = () => setFit(Math.min(1, (window.innerWidth - 32) / WIDTH_PX))
     onResize()
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
@@ -67,8 +77,9 @@ function Poster() {
         <span className="sizes">
           <a href="?size=a3" aria-current={SIZE === 'a3' ? 'page' : undefined}>A3</a>
           <a href="?size=a5" aria-current={SIZE === 'a5' ? 'page' : undefined}>A5</a>
+          <a href="?size=ipad" aria-current={SIZE === 'ipad' ? 'page' : undefined}>iPad</a>
           <button type="button" onClick={() => window.print()}>
-            <Printer size={16} /> Print / Save PDF ({SIZE.toUpperCase()})
+            <Printer size={16} /> Print / Save PDF ({SIZE === 'ipad' ? 'iPad' : SIZE.toUpperCase()})
           </button>
         </span>
       </div>
@@ -84,7 +95,7 @@ function Poster() {
             ))}
           </svg>
 
-          {orbit.map(({ I, x, y, r }, i) => (
+          {SIZE !== 'ipad' && orbit.map(({ I, x, y, r }, i) => (
             <div key={i} className="orb" style={{ left: x, top: y, transform: `rotate(${r}deg)` }}>
               <I strokeWidth={1.4} />
             </div>
@@ -114,6 +125,15 @@ function Poster() {
             <p className="tag en" dir="ltr">
               YOUR NEXT SCAN COULD WIN!
             </p>
+            {SIZE === 'ipad' && (
+              <div className="prize-row" aria-hidden>
+                {[Headphones, Watch, Tablet, Gamepad2, Laptop].map((I, i) => (
+                  <span key={i} className="orb mini">
+                    <I strokeWidth={1.4} />
+                  </span>
+                ))}
+              </div>
+            )}
             <p className="fine">تجربة تفاعلية · لا يلزم أي تسجيل أو بيانات شخصية · <span className="en">Interactive experience · No registration or personal data required</span></p>
           </footer>
         </article>

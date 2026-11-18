@@ -70,6 +70,8 @@ Writes `poster/qr-code.svg` and `poster/qr-code.png` (2048 px). It refuses non�
 
 A5 version: open `poster.html?size=a5` (or use the A3/A5 switch in the toolbar). It is the same artwork at 50% on an A5 sheet; the QR is ~76 mm wide. Ready-made files: `poster/THE-TRAP-A3.pdf`, `poster/THE-TRAP-A5.pdf`.
 
+iPad Air 11" landscape: `poster.html?size=ipad` — a landscape layout at 1180 × 820 (the iPad's exact screen shape). Ready-made: `poster/THE-TRAP-iPad-Air-11-landscape.pdf`. Open it in Files or Books, rotate to landscape and turn off Auto-Lock while it's on display.
+
 
 1. Open `https://your-deployed-site.example/poster.html`.
 2. Check the toolbar shows the right URL after "QR →".
