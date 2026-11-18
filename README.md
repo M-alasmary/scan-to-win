@@ -2,6 +2,8 @@
 
 **امسح واكتشف جائزتك! · YOUR NEXT SCAN COULD WIN!**
 
+**Live:** https://m-alasmary.github.io/scan-to-win/ · **Poster:** https://m-alasmary.github.io/scan-to-win/poster.html
+
 An immersive, bilingual (Arabic‑first RTL / English LTR) cybersecurity awareness experience for a conference booth. Visitors scan a "prize" QR poster, open a premium mystery box, and fall into a *safe* trap that teaches how QR phishing and social engineering exploit excitement.
 
 Flow (≈ 60–90 s): **Excitement → Suspense → Surprise → Awareness**
